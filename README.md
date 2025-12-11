@@ -86,6 +86,9 @@ pio run --target upload
 # Monitor serial
 pio device monitor
 ```
+### 5. Cấu hình Node-RED
+
+import file flows.json và sửa lại kết nối MQTT cho phù hợp
 
 ## 🎮 Hướng dẫn sử dụng
 
