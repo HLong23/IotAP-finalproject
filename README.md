@@ -42,7 +42,7 @@ Hệ thống khóa cửa thông minh sử dụng ESP32 với xác thực vân ta
 
 ## 📐 Sơ đồ kết nối
 
-![Sơ đồ IoT](Iotcuoiky.drawio.png)
+![Sơ đồ IoT](Schematic_Iotfinalproject.pdf)
 
 ## 📦 Cài đặt
 
@@ -133,7 +133,7 @@ mosquitto_pub -h broker.com -t door/command -m "clear_all_fingers"
 
 ## 📊 Sơ đồ hoạt động
 
-
+![Sơ đồ IoT](Iotcuoiky.drawio.png)
 
 ## 🐛 Xử lý sự cố
 
