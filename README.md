@@ -54,7 +54,7 @@ Hệ thống khóa cửa thông minh sử dụng ESP32 với xác thực vân ta
 ### 2. Clone dự án
 
 ```bash
-git clone https://github.com/yourusername/esp32-smart-lock.git
+git clone https://github.com/HLong23/IotAP-finalproject
 cd esp32-smart-lock
 ```
 
@@ -152,7 +152,7 @@ mosquitto_pub -h broker.com -t door/command -m "clear_all_fingers"
 - Thử thêm lại vân tay
 
 ### LCD không hiển thị
-- Kiểm tra địa chỉ I2C (mặc định 0x3F, có thể là 0x27)
+- Kiểm tra địa chỉ I2C (mặc định 0x3F)
 - Điều chỉnh độ tương phản bằng biến trở trên LCD
 
 ## 📚 Thư viện sử dụng
