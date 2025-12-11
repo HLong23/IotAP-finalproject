@@ -167,13 +167,13 @@ mosquitto_pub -h broker.com -t door/command -m "clear_all_fingers"
 MIT License - Tự do sử dụng cho mục đích cá nhân và thương mại.
 
 ## 🎥 Demo
-Ảnh demo Node-RED, MQTTX và EMQX
+### Ảnh demo Node-RED, MQTTX và EMQX
 ![Ảnh demo trên web](Screenshot1.png)
 ![Ảnh demo trên web](Screenshot2.png)
 ![Ảnh demo trên web](Screenshot3.png)
 ![Ảnh demo trên web](Screenshot4.png)
 ![Ảnh demo trên web](Screenshot5.png)
 
-Video demo được lưu trong Google Drive  
+### Video demo được lưu trong Google Drive  
 🔗 **Link:** https://drive.google.com/drive/folders/1uHiy6g_S8fmBADvmaXDNY2Mxs97cFy2M
 
