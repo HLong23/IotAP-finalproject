@@ -1,0 +1,401 @@
+[
+    {
+        "id": "3d006a73d43dfe48",
+        "type": "tab",
+        "label": "Door Lock Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6e99f9d9aae606a7",
+        "type": "ui_button",
+        "z": "3d006a73d43dfe48",
+        "name": "Mở cửa",
+        "group": "ui_group_control",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "passthru": false,
+        "label": "🔓 MỞ CỬA",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "#4CAF50",
+        "className": "",
+        "icon": "",
+        "payload": "unlock",
+        "payloadType": "str",
+        "topic": "door/command",
+        "topicType": "str",
+        "x": 280,
+        "y": 40,
+        "wires": [
+            [
+                "4f3071e0e59e68a9"
+            ]
+        ]
+    },
+    {
+        "id": "6d5d042452053a6f",
+        "type": "ui_text_input",
+        "z": "3d006a73d43dfe48",
+        "name": "Nhập mật khẩu mới",
+        "label": "Mật khẩu mới (4 số)",
+        "tooltip": "",
+        "group": "ui_group_control",
+        "order": 3,
+        "width": "4",
+        "height": "1",
+        "passthru": true,
+        "mode": "password",
+        "delay": "0",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 180,
+        "y": 180,
+        "wires": [
+            [
+                "a1e77a0b372627c0"
+            ]
+        ]
+    },
+    {
+        "id": "700efd781e101ca5",
+        "type": "ui_button",
+        "z": "3d006a73d43dfe48",
+        "name": "Đổi mật khẩu",
+        "group": "ui_group_control",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "label": "Đổi",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "#FF9800",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "trigger",
+        "topicType": "str",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "3e630cc8ae511b55"
+            ]
+        ]
+    },
+    {
+        "id": "a1e77a0b372627c0",
+        "type": "function",
+        "z": "3d006a73d43dfe48",
+        "name": "Validate & Store",
+        "func": "// Lưu mật khẩu vào context\nlet newPass = msg.payload;\n\nif (!newPass || newPass.length !== 4) {\n    node.warn(\"Password must be 4 digits\");\n    return null;\n}\n\nif (!/^\\d{4}$/.test(newPass)) {\n    node.warn(\"Password must contain only numbers\");\n    return null;\n}\n\n// Lưu vào flow context\nflow.set(\"pendingPassword\", newPass);\nnode.status({fill:\"green\", shape:\"dot\", text:\"Ready: \" + newPass});\n\nreturn null;",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3e630cc8ae511b55",
+        "type": "function",
+        "z": "3d006a73d43dfe48",
+        "name": "Get Stored Password",
+        "func": "let newPass = flow.get(\"pendingPassword\");\n\nif (!newPass) {\n    node.error(\"No password entered\");\n    return null;\n}\n\nmsg.payload = \"change_password\" + newPass;\nmsg.topic = \"door/command\";\n\nnode.status({fill:\"blue\", shape:\"dot\", text:\"Sending...\"});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "4f3071e0e59e68a9"
+            ]
+        ]
+    },
+    {
+        "id": "4f3071e0e59e68a9",
+        "type": "mqtt out",
+        "z": "3d006a73d43dfe48",
+        "name": "Publish Command",
+        "topic": "",
+        "qos": "1",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "mqtt_broker",
+        "x": 760,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "941b4146702d2fb4",
+        "type": "mqtt in",
+        "z": "3d006a73d43dfe48",
+        "name": "Status",
+        "topic": "door/status",
+        "qos": "1",
+        "datatype": "utf8",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 250,
+        "y": 380,
+        "wires": [
+            [
+                "06cb93a74da5d966",
+                "95f6c2049fce7a74"
+            ]
+        ]
+    },
+    {
+        "id": "e2642c7158896599",
+        "type": "mqtt in",
+        "z": "3d006a73d43dfe48",
+        "name": "Fingerprint",
+        "topic": "door/fingerprint",
+        "qos": "1",
+        "datatype": "utf8",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 250,
+        "y": 480,
+        "wires": [
+            [
+                "2a1022a98e815821",
+                "95f6c2049fce7a74"
+            ]
+        ]
+    },
+    {
+        "id": "06cb93a74da5d966",
+        "type": "function",
+        "z": "3d006a73d43dfe48",
+        "name": "Parse Status",
+        "func": "let status = msg.payload;\nlet color = \"grey\";\nlet icon = \"❓\";\nlet text = status;\n\nswitch(status) {\n    case \"door_locked\":\n        color = \"red\";\n        icon = \"🔒\";\n        text = \"KHÓA\";\n        break;\n    case \"door_unlocked\":\n        color = \"green\";\n        icon = \"🔓\";\n        text = \"MỞ\";\n        break;\n    case \"connected\":\n        color = \"blue\";\n        icon = \"✅\";\n        text = \"Đã kết nối\";\n        break;\n    case \"password_changed\":\n        color = \"orange\";\n        icon = \"🔑\";\n        text = \"Đã đổi mật khẩu\";\n        break;\n}\n\nmsg.payload = text;\nmsg.color = color;\nmsg.icon = icon;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "2c210d86bc697f38"
+            ]
+        ]
+    },
+    {
+        "id": "2c210d86bc697f38",
+        "type": "ui_text",
+        "z": "3d006a73d43dfe48",
+        "group": "ui_group_status",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "name": "Door Status",
+        "label": "Trạng thái cửa",
+        "format": "{{msg.icon}} {{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 670,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "2a1022a98e815821",
+        "type": "function",
+        "z": "3d006a73d43dfe48",
+        "name": "Parse Fingerprint",
+        "func": "let status = msg.payload.toString();\nlet text = \"\";\n\nif (status.includes(\"check_success\")) {\n    // \"check_success\\nID_found: 1\"\n    let match = status.match(/ID_found: (\\d+)/);\n    text = match ? \"✅ Vân tay đúng - ID: \" + match[1] : \"✅ Vân tay đúng\";\n}\nelse if (status.includes(\"check_fail\")) {\n    // \"check_fail\\nID_not_found\"\n    text = \"❌ Không tìm thấy vân tay\";\n}\nelse if (status.includes(\"add_success\")) {\n    // \"add_success\\nnew_id: 1\"\n    let match = status.match(/new_id: (\\d+)/);\n    text = match ? \"✅ Thêm vân tay thành công - ID: \" + match[1] : \"✅ Thêm vân tay thành công\";\n}\nelse if (status.includes(\"add_fail\")) {\n    // \"add_fail\"\n    text = \"❌ Thêm vân tay thất bại\";\n}\nelse {\n    text = status;\n}\n\nmsg.payload = text;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 480,
+        "wires": [
+            [
+                "7fbf818c4a3248e0"
+            ]
+        ]
+    },
+    {
+        "id": "7fbf818c4a3248e0",
+        "type": "ui_text",
+        "z": "3d006a73d43dfe48",
+        "group": "ui_group_status",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "name": "Fingerprint Status",
+        "label": "Vân tay",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 670,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "95f6c2049fce7a74",
+        "type": "function",
+        "z": "3d006a73d43dfe48",
+        "name": "Add to History",
+        "func": "let history = flow.get(\"history\") || [];\n\nlet timestamp = new Date().toLocaleString('vi-VN');\nlet event = {\n    time: timestamp,\n    event: msg.payload\n};\n\nhistory.unshift(event);\n\n// Giữ tối đa 20 sự kiện\nif (history.length > 20) {\n    history = history.slice(0, 20);\n}\n\nflow.set(\"history\", history);\n\nmsg.payload = history;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 400,
+        "wires": [
+            [
+                "970a1faf93f24821"
+            ]
+        ]
+    },
+    {
+        "id": "970a1faf93f24821",
+        "type": "ui_template",
+        "z": "3d006a73d43dfe48",
+        "group": "ui_group_history",
+        "name": "History Table",
+        "order": 1,
+        "width": "12",
+        "height": "6",
+        "format": "<style>\n.history-table {\n    width: 100%;\n    border-collapse: collapse;\n    font-family: Arial;\n}\n.history-table th {\n    background-color: #2196F3;\n    color: white;\n    padding: 10px;\n    text-align: left;\n}\n.history-table td {\n    padding: 8px;\n    border-bottom: 1px solid #ddd;\n}\n.history-table tr:hover {\n    background-color: #f5f5f5;\n}\n</style>\n\n<table class=\"history-table\">\n    <tr>\n        <th style=\"width: 40%\">Thời gian</th>\n        <th style=\"width: 60%\">Sự kiện</th>\n    </tr>\n    <tr ng-repeat=\"item in msg.payload\">\n        <td>{{item.time}}</td>\n        <td>{{item.event}}</td>\n    </tr>\n</table>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 670,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ui_group_control",
+        "type": "ui_group",
+        "name": "Điều khiển",
+        "tab": "672ace78705e8286",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "EMQX Door Lock",
+        "broker": "h0911427.ala.asia-southeast1.emqxsl.com",
+        "port": "8883",
+        "tls": "tls_config",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ui_group_status",
+        "type": "ui_group",
+        "name": "Trạng thái",
+        "tab": "672ace78705e8286",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ui_group_history",
+        "type": "ui_group",
+        "name": "Lịch sử",
+        "tab": "672ace78705e8286",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "672ace78705e8286",
+        "type": "ui_tab",
+        "name": "Smart Door Lock",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "tls_config",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "ab1c92b2d37e6d4d",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
