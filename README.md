@@ -168,8 +168,5 @@ MIT License - Tự do sử dụng cho mục đích cá nhân và thương mại.
 
 ## 📸 Demo
 
+[![Google Drive](https://img.shields.io/badge/Google%20Drive-Download-blue?logo=google-drive)](https://drive.google.com/drive/folders/1uHiy6g_S8fmBADvmaXDNY2Mxs97cFy2M)
 
-
----
-
-⭐ Nếu thấy dự án hữu ích, hãy cho một star nhé!
