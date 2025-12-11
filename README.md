@@ -42,7 +42,7 @@ Hệ thống khóa cửa thông minh sử dụng ESP32 với xác thực vân ta
 
 ## 📐 Sơ đồ kết nối
 
-
+Iotcuoiky.drawio.png
 
 ## 📦 Cài đặt
 
