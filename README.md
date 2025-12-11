@@ -42,7 +42,7 @@ Hệ thống khóa cửa thông minh sử dụng ESP32 với xác thực vân ta
 
 ## 📐 Sơ đồ kết nối
 
-![Sơ đồ IoT](Schematic_Iotfinalproject.pdf)
+![Sơ đồ IoT](Schematic_Iotfinalproject.jpg)
 
 ## 📦 Cài đặt
 
@@ -133,7 +133,7 @@ mosquitto_pub -h broker.com -t door/command -m "clear_all_fingers"
 
 ## 📊 Sơ đồ hoạt động
 
-![Sơ đồ IoT](Iotcuoiky.drawio.png)
+![Sơ đồ thuật toán](Iotcuoiky.drawio.png)
 
 ## 🐛 Xử lý sự cố
 
@@ -166,8 +166,8 @@ mosquitto_pub -h broker.com -t door/command -m "clear_all_fingers"
 
 MIT License - Tự do sử dụng cho mục đích cá nhân và thương mại.
 
-## 🎥 Video Demo
-
-📌 Video demo được lưu trong Google Drive  
+## 🎥 Demo
+Ảnh demo Node-RED, MQTTX và EMQX
+Video demo được lưu trong Google Drive  
 🔗 **Link:** https://drive.google.com/drive/folders/1uHiy6g_S8fmBADvmaXDNY2Mxs97cFy2M
 
